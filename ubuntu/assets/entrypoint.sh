@@ -1,5 +1,7 @@
 #!/bin/bash
 
+service ssh restart
+
 set -e
 
 hex()
