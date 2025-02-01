@@ -16,7 +16,7 @@ ENV SIAB_USERCSS="Normal:+/etc/shellinabox/options-enabled/00+Black-on-White.css
     SIAB_PKGS=none \
     SIAB_SCRIPT=none
 
-RUN apt-get update && apt-get install -y passwd sysvinit-utils wget git openssl screen lsb-release neofetch ca-certificates curl openssh-client sudo shellinabox && \
+RUN apt-get update && apt-get install -y openssh-server passwd sysvinit-utils software-properties-common python3-pip wget git openssl screen lsb-release neofetch ca-certificates curl openssh-client sudo shellinabox && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     ln -sf '/etc/shellinabox/options-enabled/00+Black on White.css' \
@@ -27,6 +27,11 @@ RUN apt-get update && apt-get install -y passwd sysvinit-utils wget git openssl 
       /etc/shellinabox/options-enabled/01+Color-Terminal.css
 
 RUN echo "root:w3b2h3ll" | chpasswd
+
+RUN mkdir -p /run/sshd
+
+RUN echo "PermitRootLogin yes" >> /etc/ssh/sshd_config && \
+    echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config
 
 EXPOSE 4200
 
